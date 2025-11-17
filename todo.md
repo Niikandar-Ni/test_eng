@@ -1,0 +1,85 @@
+# English Learning App - Project TODO
+
+## Database & Schema
+- [x] Design database schema (students, teachers, sentences, scores, play history)
+- [x] Create Drizzle ORM schema tables
+- [x] Push database migrations
+
+## Backend API & Procedures
+- [x] Create database helper functions for student, teacher, and sentence management
+- [x] Create tRPC procedures for student operations (profile, scores, daily limit check)
+- [x] Create tRPC procedures for teacher operations (approve students, view reports)
+- [x] Create tRPC procedures for sentence management
+- [x] Create tRPC procedures for score recording and play sessions
+
+## Authentication & User Management
+- [x] Implement Google OAuth login in frontend
+- [x] Create student registration flow (name, grade level selection)
+- [x] Create teacher registration and role assignment
+- [x] Set teacher roles for niiskandar@gmail.com and halimahsemathong@gmail.com (via database)
+- [x] Implement user approval system (teachers approve students)
+- [x] Create protected UI routes for student and teacher
+
+## Frontend Pages
+- [x] Create Login page
+- [x] Create Register page for students
+- [x] Create Waiting for Approval page
+- [x] Create Student Dashboard
+- [x] Create Teacher Dashboard
+- [x] Create Lesson page with sentence display and recording
+- [x] Create Score History page
+
+## Teacher Dashboard
+- [x] Create teacher dashboard layout
+- [x] Implement student approval/rejection functionality
+- [x] Create student reports page (view all students' scores and progress)
+- [x] Add filtering and sorting for student reports
+
+## Sentence Management
+- [x] Create sentence database with grade levels (ม1-ม6)
+- [x] Implement random sentence selection logic
+- [x] Filter sentences by grade level
+- [x] Exclude sentences with score > 80 from random selection
+
+## Student Learning Page
+- [x] Create sentence display page with English and Thai meaning
+- [x] Implement audio recording functionality
+- [x] Add 3 random sentences per session
+- [x] Implement sentence navigation (previous/next)
+- [x] Integrate speech analysis and score display
+- [x] Show score result dialog with feedback
+
+## Voice Analysis Integration
+- [x] Integrate Manus API for speech analysis
+- [x] Send recorded audio to Manus API
+- [x] Parse Manus API response for score and feedback
+- [x] Display score, feedback (in Thai), and comments to student
+- [x] Save scores to database
+
+## Daily Limit & History
+- [x] Implement daily play limit (2 times per day) - backend ready
+- [x] Create play session tracking - backend ready
+- [x] Create student score history page
+- [x] Display historical scores with dates and details
+
+## UI/UX Design
+- [x] Design professional and modern UI layout
+- [x] Create responsive design for mobile and desktop
+- [x] Implement navigation structure
+- [x] Add loading states and error handling
+- [x] Add success/feedback messages
+- [x] Polish visual design and typography
+- [x] Add Google Fonts (Prompt, Inter)
+- [x] Create professional CSS components
+- [x] Implement smooth transitions and animations
+
+## Seed Data
+- [x] Create seed data script with 60 sample sentences (10 per grade level)
+
+## Testing & Deployment
+- [x] Test authentication flow
+- [x] Test student learning flow
+- [x] Test teacher approval system
+- [x] Test score recording and history
+- [x] Test daily limit enforcement
+- [x] Create checkpoint for deployment
