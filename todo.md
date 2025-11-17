@@ -80,9 +80,10 @@
 - [x] Import sentences from seed-db.mjs into MySQL database - 90 sentences successfully inserted
 
 ## Bug Fixes
-- [x] Fix missing useAuth import in all pages (Login, Register, WaitingApproval, ScoreHistory, Lesson, TeacherDashboard)
+- [x] Fix missing useAuth import in all pages (Login, Register, WaitingApproval, ScoreHistory, Lesson, TeacherDashboard, StudentDashboard)
 - [x] Fix audio recording and playback issues (proper object URL cleanup with useMemo)
 - [x] Fix timezone handling for daily limits (use UTC date strings)
+- [x] Fix API Mutation Error - Removed duplicate useAuth import from StudentDashboard
 - [ ] Fix loading state handling
 - [ ] Fix error handling in API calls
 - [ ] Fix responsive design issues

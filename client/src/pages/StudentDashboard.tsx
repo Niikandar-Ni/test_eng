@@ -1,4 +1,3 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
@@ -6,6 +5,7 @@ import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { BookOpen, BarChart3, LogOut, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function StudentDashboard() {
   const { user, isAuthenticated, loading, logout } = useAuth();
