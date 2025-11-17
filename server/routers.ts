@@ -57,8 +57,12 @@ export const appRouter = router({
   student: router({
     // Get or create student profile
     getProfile: protectedProcedure.query(async ({ ctx }) => {
+      // If user is admin or teacher, return null (they don't have student profile)
+      if (ctx.user.role === "admin" || ctx.user.role === "teacher") {
+        return null;
+      }
       const profile = await getStudentProfile(ctx.user.id);
-      return profile;
+      return profile || null; // Return null instead of undefined
     }),
 
     // Create student profile (during registration)
@@ -77,12 +81,24 @@ export const appRouter = router({
 
     // Get student's score history
     getScoreHistory: protectedProcedure.query(async ({ ctx }) => {
+      // Only students can get their score history
+      if (ctx.user.role !== "user") {
+        return [];
+      }
       const scores = await getStudentScores(ctx.user.id);
       return scores;
     }),
 
     // Check if can play today
     canPlayToday: protectedProcedure.query(async ({ ctx }) => {
+      // Only students can play
+      if (ctx.user.role !== "user") {
+        return {
+          canPlay: false,
+          sessionsUsed: 0,
+          sessionsRemaining: 0,
+        };
+      }
       const today = new Date().toISOString().split('T')[0];
       const sessionCount = await getTodaySessionCount(ctx.user.id, today);
       return {
@@ -96,7 +112,7 @@ export const appRouter = router({
   // Teacher Management
   teacher: router({
     // Get pending students for approval
-    getPendingStudents: teacherProcedure.query(async () => {
+    getPendingStudents: teacherProcedure.query(async ({ ctx }) => {
       const pendingStudents = await getPendingStudents();
       // Get user details for each pending student
       const db = await getDb();
@@ -136,7 +152,7 @@ export const appRouter = router({
       }),
 
     // Get all students' reports
-    getAllStudentsReport: teacherProcedure.query(async () => {
+    getAllStudentsReport: teacherProcedure.query(async ({ ctx }) => {
       const db = await getDb();
       if (!db) return [];
 

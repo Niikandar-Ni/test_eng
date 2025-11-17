@@ -29,8 +29,18 @@ export default function StudentDashboard() {
     }
   }, [isAuthenticated, loading, navigate]);
 
+  // Redirect admin/teacher users to their dashboard
   useEffect(() => {
-    if (profile && !profile.isApproved) {
+    if (!loading && user && (user.role === "admin" || user.role === "teacher")) {
+      navigate("/teacher");
+    }
+  }, [user, loading, navigate]);
+
+  useEffect(() => {
+    if (profile === null) {
+      // User doesn't have a student profile (admin/teacher)
+      navigate("/teacher");
+    } else if (profile && !profile.isApproved) {
       navigate("/waiting-approval");
     }
   }, [profile, navigate]);
