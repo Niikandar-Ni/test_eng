@@ -24,15 +24,15 @@ import { getDb } from "./db";
 import { eq } from "drizzle-orm";
 import { analysisRouter } from "./routers/analysis";
 
-// Helper function to check if user is a teacher
+// Helper function to check if user is a teacher or admin
 async function isTeacher(userId: number): Promise<boolean> {
   const db = await getDb();
   if (!db) return false;
   const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
-  return user.length > 0 && user[0].role === "teacher";
+  return user.length > 0 && (user[0].role === "teacher" || user[0].role === "admin");
 }
 
-// Teacher-only procedure
+// Teacher-only procedure (includes admin users)
 const teacherProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   if (!await isTeacher(ctx.user.id)) {
     throw new TRPCError({ code: "FORBIDDEN", message: "Only teachers can access this" });
