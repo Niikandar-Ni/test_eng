@@ -63,8 +63,9 @@ export const appRouter = router({
       if (ctx.user.role === "admin" || ctx.user.role === "teacher") {
         return null;
       }
+      // For regular users (students), return their profile or undefined if not found
       const profile = await getStudentProfile(ctx.user.id);
-      return profile || null; // Return null instead of undefined
+      return profile;
     }),
 
     // Create student profile (during registration)
