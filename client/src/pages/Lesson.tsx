@@ -57,6 +57,8 @@ export default function Lesson() {
     },
   });
 
+  const uploadAudioMutation = trpc.analysis.uploadAudio.useMutation();
+
   const analyzeMutation = trpc.analysis.analyzeSpeechAndRecord.useMutation({
     onSuccess: (data) => {
       setScoreResult(data);
@@ -189,20 +191,35 @@ export default function Lesson() {
 
     setIsAnalyzing(true);
 
-    // Upload audio to storage and get URL
     try {
-      // For now, we'll use a temporary URL
-      // In production, you should upload to S3 first
-      const audioUrl = URL.createObjectURL(recordedAudio);
+      // Step 1: Convert audio blob to base64
+      const reader = new FileReader();
+      const base64Audio = await new Promise<string>((resolve, reject) => {
+        reader.onloadend = () => {
+          const base64 = reader.result as string;
+          // Remove data:audio/webm;base64, prefix
+          const base64Data = base64.split(',')[1];
+          resolve(base64Data);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(recordedAudio);
+      });
 
-      // Analyze speech
+      // Step 2: Upload audio to storage
+      const uploadResult = await uploadAudioMutation.mutateAsync({
+        audioData: base64Audio,
+        contentType: recordedAudio.type,
+      });
+
+      // Step 3: Analyze speech with the uploaded URL
       await analyzeMutation.mutateAsync({
-        audioUrl,
+        audioUrl: uploadResult.audioUrl,
         sentenceId: sessionSentences[currentSentenceIndex].id,
         targetSentence: sessionSentences[currentSentenceIndex].englishText,
       });
     } catch (error) {
       console.error("Error submitting:", error);
+      toast.error("เกิดข้อผิดพลาดในการส่งข้อมูล");
       setIsAnalyzing(false);
     }
   };
