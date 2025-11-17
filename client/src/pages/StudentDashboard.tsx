@@ -37,15 +37,14 @@ export default function StudentDashboard() {
   }, [user, loading, navigate]);
 
   useEffect(() => {
-    if (!profileLoading && profile === undefined) {
-      // User doesn't have a student profile yet - redirect to register
-      navigate("/register");
-    } else if (profile === null) {
-      // User is not a student (admin/teacher) - redirect to teacher dashboard
-      navigate("/teacher");
-    } else if (profile && !profile.isApproved) {
-      // User has profile but not approved - redirect to waiting approval
-      navigate("/waiting-approval");
+    if (!profileLoading) {
+      if (profile === null) {
+        // User doesn't have a student profile yet - redirect to register
+        navigate("/register");
+      } else if (profile && !profile.isApproved) {
+        // User has profile but not approved - redirect to waiting approval
+        navigate("/waiting-approval");
+      }
     }
   }, [profile, profileLoading, navigate]);
 
