@@ -29,21 +29,25 @@ export default function StudentDashboard() {
     }
   }, [isAuthenticated, loading, navigate]);
 
-  // Redirect admin/teacher users to their dashboard
+  // Redirect admin users to their dashboard
   useEffect(() => {
-    if (!loading && user && (user.role === "admin" || user.role === "teacher")) {
+    if (!loading && user && user.role === "admin") {
       navigate("/teacher");
     }
   }, [user, loading, navigate]);
 
   useEffect(() => {
-    if (profile === null) {
-      // User doesn't have a student profile (admin/teacher)
+    if (!profileLoading && profile === undefined) {
+      // User doesn't have a student profile yet - redirect to register
+      navigate("/register");
+    } else if (profile === null) {
+      // User is not a student (admin/teacher) - redirect to teacher dashboard
       navigate("/teacher");
     } else if (profile && !profile.isApproved) {
+      // User has profile but not approved - redirect to waiting approval
       navigate("/waiting-approval");
     }
-  }, [profile, navigate]);
+  }, [profile, profileLoading, navigate]);
 
   const handleLogout = async () => {
     await logout();
