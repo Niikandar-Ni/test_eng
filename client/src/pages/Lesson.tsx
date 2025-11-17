@@ -29,6 +29,7 @@ export default function Lesson() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [scoreResult, setScoreResult] = useState<ScoreResult | null>(null);
   const [showScoreDialog, setShowScoreDialog] = useState(false);
+  const [sessionInitialized, setSessionInitialized] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<BlobPart[]>([]);
@@ -70,7 +71,7 @@ export default function Lesson() {
 
   // Initialize session with 3 random sentences
   useEffect(() => {
-    if (!availableSentences || !highScoredIds) return;
+    if (!availableSentences || !highScoredIds || sessionInitialized) return;
 
     // Filter out sentences with high scores
     const filteredSentences = availableSentences.filter(
@@ -98,12 +99,13 @@ export default function Lesson() {
 
     setSessionSentences(selected);
     setIsLoadingSentences(false);
+    setSessionInitialized(true);
 
     // Create session
     createSessionMutation.mutate({
       sentenceIds: selected.map((s) => s.id),
     });
-  }, [availableSentences, highScoredIds, navigate, createSessionMutation]);
+  }, [availableSentences, highScoredIds, sessionInitialized, navigate, createSessionMutation]);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
