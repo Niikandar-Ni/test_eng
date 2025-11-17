@@ -76,10 +76,18 @@
 ## Seed Data
 - [x] Create seed data script with 60 sample sentences (10 per grade level)
 
+## Bug Fixes
+- [x] Fix missing useAuth import in all pages (Login, Register, WaitingApproval, ScoreHistory, Lesson, TeacherDashboard)
+- [x] Fix audio recording and playback issues (proper object URL cleanup with useMemo)
+- [x] Fix timezone handling for daily limits (use UTC date strings)
+- [ ] Fix loading state handling
+- [ ] Fix error handling in API calls
+- [ ] Fix responsive design issues
+
 ## Testing & Deployment
-- [x] Test authentication flow
-- [x] Test student learning flow
-- [x] Test teacher approval system
-- [x] Test score recording and history
-- [x] Test daily limit enforcement
-- [x] Create checkpoint for deployment
+- [ ] Test authentication flow
+- [ ] Test student learning flow
+- [ ] Test teacher approval system
+- [ ] Test score recording and history
+- [ ] Test daily limit enforcement
+- [ ] Create checkpoint for deployment

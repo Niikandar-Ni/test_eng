@@ -102,6 +102,7 @@ export const appRouter = router({
           sessionsRemaining: 0,
         };
       }
+      // Use UTC date to ensure consistent daily limits across timezones
       const today = new Date().toISOString().split('T')[0];
       const sessionCount = await getTodaySessionCount(ctx.user.id, today);
       return {

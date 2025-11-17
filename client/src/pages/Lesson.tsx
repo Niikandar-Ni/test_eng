@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useLocation } from "wouter";
 import { Volume2, Mic, Square, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -148,6 +148,21 @@ export default function Lesson() {
     // TODO: Implement text-to-speech for the sentence
     toast.info("ฟังก์ชันเล่นเสียงจะเพิ่มเติมในเวอร์ชันต่อไป");
   };
+
+  // Create object URL for audio playback
+  const audioUrl = useMemo(() => {
+    if (!recordedAudio) return undefined;
+    return URL.createObjectURL(recordedAudio);
+  }, [recordedAudio]);
+
+  // Cleanup object URL on unmount or when audio changes
+  useEffect(() => {
+    return () => {
+      if (audioUrl) {
+        URL.revokeObjectURL(audioUrl);
+      }
+    };
+  }, [audioUrl]);
 
   const handleNext = () => {
     if (currentSentenceIndex < sessionSentences.length - 1) {
@@ -305,7 +320,7 @@ export default function Lesson() {
                   <audio
                     controls
                     className="w-full"
-                    src={URL.createObjectURL(recordedAudio)}
+                    src={audioUrl}
                   />
                 </div>
               )}
