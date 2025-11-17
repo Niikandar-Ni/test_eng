@@ -30,7 +30,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-indigo-600">Hali English Learning App</CardTitle>
+          <CardTitle className="text-3xl font-bold text-indigo-600">..Hali English Learning App</CardTitle>
           <CardDescription className="text-base mt-2">
             สำหรับนักเรียนชั้นมัธยมศึกษา
           </CardDescription>
