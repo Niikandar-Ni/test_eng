@@ -105,7 +105,8 @@ export default function Lesson() {
     createSessionMutation.mutate({
       sentenceIds: selected.map((s) => s.id),
     });
-  }, [availableSentences, highScoredIds, sessionInitialized, navigate, createSessionMutation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [availableSentences, highScoredIds, sessionInitialized]);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
