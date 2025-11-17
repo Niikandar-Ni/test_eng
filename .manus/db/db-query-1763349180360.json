@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as total_sentences FROM sentences;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user J7HGDQr8hdQS4aP.876ceb38eb4b --database TQCHBvdevCqDLwttcqQXyb --execute SELECT COUNT(*) as total_sentences FROM sentences;",
+  "rows": [
+    {
+      "total_sentences": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_sentences\n1\n",
+  "stderr": "",
+  "execution_time_ms": 1628
+}

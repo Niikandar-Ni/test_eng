@@ -77,6 +77,7 @@
 - [x] Create seed data script with 60 sample sentences (10 per grade level)
 - [x] Create comprehensive example sentences for all grade levels (ม.1-ม.6) - 90 sentences total
 - [x] Create seed-db.mjs script to add sentences to database
+- [x] Import sentences from seed-db.mjs into MySQL database - 90 sentences successfully inserted
 
 ## Bug Fixes
 - [x] Fix missing useAuth import in all pages (Login, Register, WaitingApproval, ScoreHistory, Lesson, TeacherDashboard)
