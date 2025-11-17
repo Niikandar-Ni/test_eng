@@ -34,10 +34,12 @@ function Router() {
       return <Login />;
     }
 
-    if (user?.role === "teacher") {
+    // Admin and teacher users go to teacher dashboard
+    if (user?.role === "admin" || user?.role === "teacher") {
       return <TeacherDashboard />;
     }
 
+    // Regular users (students) go to student dashboard
     return <StudentDashboard />;
   };
 
