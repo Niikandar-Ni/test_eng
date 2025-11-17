@@ -30,7 +30,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-indigo-600">English Learning App</CardTitle>
+          <CardTitle className="text-3xl font-bold text-indigo-600">English Learning Apppp</CardTitle>
           <CardDescription className="text-base mt-2">
             สำหรับนักเรียนชั้นมัธยมศึกษา
           </CardDescription>
@@ -76,7 +76,7 @@ export default function Login() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">หรือ</span>
+              <span className="px-2 bg-white text-gray-500">หมายเหตุ</span>
             </div>
           </div>
 

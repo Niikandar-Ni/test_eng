@@ -8,14 +8,26 @@ export const APP_LOGO = "https://placehold.co/128x128/E1E7EF/1F2937?text=App";
 export const getLoginUrl = () => {
   const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
   const appId = import.meta.env.VITE_APP_ID;
+  
+  // Return a placeholder if OAuth is not configured
+  if (!oauthPortalUrl || !appId) {
+    console.warn('OAuth not configured. Please set VITE_OAUTH_PORTAL_URL and VITE_APP_ID in .env file');
+    return '/login';
+  }
+
   const redirectUri = `${window.location.origin}/api/oauth/callback`;
   const state = btoa(redirectUri);
 
-  const url = new URL(`${oauthPortalUrl}/app-auth`);
-  url.searchParams.set("appId", appId);
-  url.searchParams.set("redirectUri", redirectUri);
-  url.searchParams.set("state", state);
-  url.searchParams.set("type", "signIn");
+  try {
+    const url = new URL(`${oauthPortalUrl}/app-auth`);
+    url.searchParams.set("appId", appId);
+    url.searchParams.set("redirectUri", redirectUri);
+    url.searchParams.set("state", state);
+    url.searchParams.set("type", "signIn");
 
-  return url.toString();
+    return url.toString();
+  } catch (error) {
+    console.error('Invalid OAuth URL configuration:', error);
+    return '/login';
+  }
 };
