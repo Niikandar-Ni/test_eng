@@ -84,6 +84,7 @@
 - [x] Fix audio recording and playback issues (proper object URL cleanup with useMemo)
 - [x] Fix timezone handling for daily limits (use UTC date strings)
 - [x] Fix API Mutation Error - Removed duplicate useAuth import from StudentDashboard
+- [x] Fix "Only teachers can access this" error on Home page - Added missing useAuth import to TeacherDashboard
 - [ ] Fix loading state handling
 - [ ] Fix error handling in API calls
 - [ ] Fix responsive design issues
