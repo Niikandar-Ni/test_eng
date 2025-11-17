@@ -203,7 +203,7 @@ export default function StudentDashboard() {
                     กำลังเปิด...
                   </>
                 ) : canPlayData?.canPlay ? (
-                  "เริ่มเลย"
+                  "เริ่มเลย.."
                 ) : (
                   "ถึงจำนวนครั้งแล้ว"
                 )}
