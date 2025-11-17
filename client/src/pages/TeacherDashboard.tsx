@@ -47,10 +47,15 @@ export default function TeacherDashboard() {
   });
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      navigate("/login");
+    if (!loading) {
+      if (!isAuthenticated) {
+        navigate("/login");
+      } else if (user && user.role !== "admin" && user.role !== "teacher") {
+        // User is not a teacher - redirect to student dashboard
+        navigate("/");
+      }
     }
-  }, [isAuthenticated, loading, navigate]);
+  }, [isAuthenticated, loading, user, navigate]);
 
   const handleLogout = async () => {
     await logout();
