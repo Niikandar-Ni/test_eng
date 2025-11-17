@@ -18,6 +18,8 @@ import {
   getTodaySessionCount,
   createPlaySession,
   completePlaySession,
+  setUserAsTeacher,
+  setUserAsStudent,
 } from "./db";
 import { users } from "../drizzle/schema";
 import { getDb } from "./db";
@@ -182,6 +184,26 @@ export const appRouter = router({
 
       return reportsData.filter(r => r.isApproved);
     }),
+
+    // Set user as teacher
+    setAsTeacher: teacherProcedure
+      .input(z.object({
+        userId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        await setUserAsTeacher(input.userId);
+        return { success: true };
+      }),
+
+    // Set user as student
+    setAsStudent: teacherProcedure
+      .input(z.object({
+        userId: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        await setUserAsStudent(input.userId);
+        return { success: true };
+      }),
   }),
 
   // Sentence Management

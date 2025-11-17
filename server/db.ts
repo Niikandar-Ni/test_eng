@@ -56,8 +56,16 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       values.role = user.role;
       updateSet.role = user.role;
     } else if (user.openId === ENV.ownerOpenId) {
+      // Owner gets admin role
       values.role = 'admin';
       updateSet.role = 'admin';
+    } else {
+      // New users default to 'user' (student) role
+      values.role = 'user';
+      // Only set role in updateSet if this is a new user (not in updateSet yet)
+      if (Object.keys(updateSet).length === 0) {
+        updateSet.role = 'user';
+      }
     }
 
     if (!values.lastSignedIn) {
@@ -143,6 +151,26 @@ export async function rejectStudent(studentId: number): Promise<void> {
   if (!db) throw new Error("Database not available");
 
   await db.delete(studentProfiles).where(eq(studentProfiles.id, studentId));
+}
+
+export async function setUserAsTeacher(userId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(users)
+    .set({ role: "teacher" })
+    .where(eq(users.id, userId));
+}
+
+export async function setUserAsStudent(userId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(users)
+    .set({ role: "user" })
+    .where(eq(users.id, userId));
 }
 
 // Sentence Functions
