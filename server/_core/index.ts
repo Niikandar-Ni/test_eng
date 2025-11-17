@@ -43,6 +43,31 @@ async function startServer() {
       createContext,
     })
   );
+
+  // Error handling middleware for API routes
+  app.use((err: any, req: any, res: any, next: any) => {
+    console.error('[Server Error]', err);
+    
+    // If it's an API route, return JSON error
+    if (req.path.startsWith('/api/')) {
+      return res.status(500).json({
+        error: {
+          json: {
+            message: err.message || 'Internal Server Error',
+            code: -32603,
+            data: {
+              code: 'INTERNAL_SERVER_ERROR',
+              httpStatus: 500,
+            }
+          }
+        }
+      });
+    }
+    
+    // For other routes, pass to next handler
+    next(err);
+  });
+
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
