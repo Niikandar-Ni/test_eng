@@ -85,6 +85,7 @@
 - [x] Fix timezone handling for daily limits (use UTC date strings)
 - [x] Fix API Mutation Error - Removed duplicate useAuth import from StudentDashboard
 - [x] Fix "Only teachers can access this" error on Home page - Added missing useAuth import to TeacherDashboard
+- [x] Fix daily limit bypass - Added button disable state and server-side validation to prevent multiple session creation
 - [ ] Fix loading state handling
 - [ ] Fix error handling in API calls
 - [ ] Fix responsive design issues

@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { BookOpen, BarChart3, LogOut, AlertCircle } from "lucide-react";
+import { BookOpen, BarChart3, LogOut, AlertCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/_core/hooks/useAuth";
 
@@ -53,12 +53,22 @@ export default function StudentDashboard() {
     navigate("/login");
   };
 
-  const handleStartLesson = () => {
+  const [isStartingLesson, setIsStartingLesson] = useState(false);
+
+  const handleStartLesson = async () => {
     if (!canPlayData?.canPlay) {
       toast.error("คุณได้ใช้ครบจำนวนครั้งในวันนี้แล้ว");
       return;
     }
-    navigate("/lesson");
+    if (isStartingLesson) {
+      return; // Prevent multiple clicks
+    }
+    setIsStartingLesson(true);
+    try {
+      navigate("/lesson");
+    } finally {
+      setIsStartingLesson(false);
+    }
   };
 
   if (loading || profileLoading || canPlayLoading) {
@@ -184,10 +194,19 @@ export default function StudentDashboard() {
             <CardContent>
               <Button
                 onClick={handleStartLesson}
-                disabled={!canPlayData?.canPlay}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!canPlayData?.canPlay || isStartingLesson}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {canPlayData?.canPlay ? "เริ่มเลย" : "ถึงจำนวนครั้งแล้ว"}
+                {isStartingLesson ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    กำลังเปิด...
+                  </>
+                ) : canPlayData?.canPlay ? (
+                  "เริ่มเลย"
+                ) : (
+                  "ถึงจำนวนครั้งแล้ว"
+                )}
               </Button>
             </CardContent>
           </Card>

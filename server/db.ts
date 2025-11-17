@@ -274,7 +274,14 @@ export async function createPlaySession(studentId: number, sessionDate: string, 
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
+  // Get current session count for this user today
   const sessionCount = await getTodaySessionCount(studentId, sessionDate);
+  
+  // Prevent exceeding daily limit (2 sessions per day)
+  if (sessionCount >= 2) {
+    throw new Error("Daily session limit exceeded");
+  }
+  
   const sessionNumber = sessionCount + 1;
 
   await db.insert(playSessions).values({
